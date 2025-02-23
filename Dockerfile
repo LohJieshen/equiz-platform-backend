@@ -17,7 +17,7 @@ FROM eclipse-temurin:21-alpine
 WORKDIR /equiz-platform-backend
 
 # Copy JAR file from build stage
-COPY --from-builder /equiz-platform-backend/target/EQuizPlatform-0.0.1-SNAPSHOT.jar EQuizPlatform.jar
+COPY --from=builder /equiz-platform-backend/target/EQuizPlatform-0.0.1-SNAPSHOT.jar EQuizPlatform.jar
 
 EXPOSE 8080
 
