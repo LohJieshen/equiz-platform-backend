@@ -5,6 +5,7 @@ import edu.digipen.capstone.equizplatform.models.UserBasicProfileInfo;
 import edu.digipen.capstone.equizplatform.models.UserCredentials;
 import edu.digipen.capstone.equizplatform.services.EQuizPlatformService;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +49,11 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+    }
+
+    @PutMapping("/update-last-login/{userId}")
+    public ResponseEntity<String> updateLastLogin(@PathVariable int userId) {
+        String message = eQuizPlatformService.updateLastLogin(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 }
