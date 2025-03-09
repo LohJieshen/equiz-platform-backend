@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface UserRepositoryCustom {
 
-    public List<User> findAllByCourseId(Integer courseId);
+    List<User> findAllByCourseId(Integer courseId);
 }
