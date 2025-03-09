@@ -94,6 +94,15 @@ public class EQuizPlatformService {
         return user.isLecturer();
     }
 
+    public String updateLastLogin(int userId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new IllegalArgumentException("User not found"));
+        user.setLastLoginDate(LocalDate.now());
+        userRepository.save(user);
+
+        return "Last Login Date updated";
+    }
+
     /**
      * Retrieves a {@code Quiz} object from the repository based on the quiz Id.
      *
@@ -163,7 +172,7 @@ public class EQuizPlatformService {
         int nextQuestionId = currQuizAttemptProcessor.retrieveQuestionId(userId, quizId,
                                             currQuestionNo+1);
         Question nextQuestion = questionRepository.findById(nextQuestionId).orElseThrow(() ->
-                new IllegalArgumentException("Question not found."));;
+                new IllegalArgumentException("Question not found."));
 
         return questionProcessor.convertDto(nextQuestion);
     }
@@ -180,7 +189,7 @@ public class EQuizPlatformService {
         int prevQuestionId = currQuizAttemptProcessor.retrieveQuestionId(userId, quizId,
                 currQuestionNo-1);
         Question prevQuestion = questionRepository.findById(prevQuestionId).orElseThrow(() ->
-                new IllegalArgumentException("Question not found."));;
+                new IllegalArgumentException("Question not found."));
 
         return questionProcessor.convertDto(prevQuestion);
     }
@@ -226,7 +235,7 @@ public class EQuizPlatformService {
             return null;
         }
         quizAttempt = quizAttemptRepository.findById(quizAttemptId).orElseThrow(() ->
-                new IllegalArgumentException("Quiz Attempt not found."));;
+                new IllegalArgumentException("Quiz Attempt not found."));
 
         // set some fields for quiz result
         QuizResult quizResult = new QuizResult(quizId, currQuizAttempt.getQuizName(), 0, questionAnswerList.size(),
@@ -304,7 +313,7 @@ public class EQuizPlatformService {
      */
     public QuestionDto getQuestion(int questionId) {
         Question question = questionRepository.findById(questionId).orElseThrow(() ->
-                new IllegalArgumentException("Question not found."));;
+                new IllegalArgumentException("Question not found."));
 
         return questionProcessor.convertDto(question);
     }
@@ -372,7 +381,7 @@ public class EQuizPlatformService {
     public String getCourseNameByQuizId(int quizId) {
         Course course = courseRepository.findByQuizId(quizId);
         Quiz quiz = quizRepository.findById(quizId).orElseThrow(() ->
-                new IllegalArgumentException("Quiz not found."));;
+                new IllegalArgumentException("Quiz not found."));
 
         return course.getCourseName();
     }
