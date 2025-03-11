@@ -65,7 +65,7 @@ public class QuizController {
      * @return {@code Integer} quizId for the newly created quiz
      */
     @PostMapping("/create")
-    public Integer addQuiz(@RequestBody QuizCreation newQuiz) {
+    public Integer createQuiz(@RequestBody QuizCreation newQuiz) {
         return quizPlatformService.addNewQuiz(newQuiz);
     }
 
@@ -75,7 +75,7 @@ public class QuizController {
      * @param userId
      * @return
      */
-    @GetMapping("/start/{quizId}")
+    @PutMapping("/start/{quizId}")
     public CurrQuizAttempt launchQuiz(@PathVariable int quizId,
                              @RequestParam int userId) {
         return quizPlatformService.launchQuiz(userId, quizId);
