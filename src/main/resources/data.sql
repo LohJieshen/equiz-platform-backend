@@ -66,7 +66,7 @@ INSERT INTO quiz_attempt (quiz_id, user_id) VALUES
 INSERT INTO question (question_id, question_body, topic_id, ans_id, is_removed, choice_1, choice_2, choice_3, choice_4) VALUES
 (1, 'What is the time complexity of removing a node from tail of a Singly Linked List without a tail pointer?', 1, 1, FALSE, 'O(n)', 'O(1)', 'O(log n)', 'O(n log n)'),
 (2, 'An ArrayList can be instantiated with a specified initial capacity.', 1, 1, FALSE, 'True', 'False', NULL, NULL),
-(3, 'A Linked List can be accessed at any point with time complexity of O(1)', 1, 1, FALSE, 'True', 'False', NULL, NULL),
+(3, 'A Linked List can be accessed at any point with time complexity of O(1)', 1, 2, FALSE, 'True', 'False', NULL, NULL),
 (4, 'Logistic Regression is used for classification.', 2, 1, FALSE, 'True', 'False', NULL, NULL),
 (5, 'Which of the given machine learning is NOT a supervised learning technique?', 2, 3, FALSE, 'Linear Regression', 'Decision Tree', 'K-nearest neighbour', 'K-means clustering'),
 (6, 'Which of the following is NOT an ensemble machining learning model?', 2, 3, FALSE, 'Support Vector Machine', 'Random Forest', 'XGBoost', 'CatBoost'),
