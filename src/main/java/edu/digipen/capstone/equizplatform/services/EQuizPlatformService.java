@@ -184,11 +184,13 @@ public class EQuizPlatformService {
         // Check choices against correct answers, consolidate result and set up quizResult
         int result = currQuizAttemptProcessor.calculateHighScore(currQuizAttempt, questionAnswerList, quizResult);
 
-        // Update score (if high score is lower than current score),  and update attempt count in quizAttempt
+        // Update score (if high score is lower than current score)
         if (quizAttempt.getHighScore() < result) {
             quizAttempt.setHighScore(result);
-            quizAttempt.setAttempts(quizAttempt.getAttempts() + 1);
         }
+
+        // Update attempt count in quizAttempt
+        quizAttempt.setAttempts(quizAttempt.getAttempts() + 1);
 
         // Update database
         QuizAttempt savedQuizAttempt = quizAttemptRepository.save(quizAttempt);
