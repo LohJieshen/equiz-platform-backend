@@ -41,69 +41,6 @@ public class EQuizPlatformService {
     private final QuizQuestionRepository quizQuestionRepository;
 
     /**
-     * Authenticates the user's login credentials by first checking if the userId exists, then checks if password
-     * matches between client and database.
-     *
-     * @param userCredentialsClient - user credential information, containing userId, password (isLecturer is null at
-     *                             this point) sent from client side.
-     * @return true if the authentication is successful. False otherwise.
-     */
-    @RequestScope
-    public boolean authenticateUserLogin(UserCredentials userCredentialsClient) {
-
-        int clientUserId = userCredentialsClient.getUserId();
-
-        // Check if there is any match for userId
-        if (!userRepository.existsById(clientUserId)) {
-            System.out.println("User does not exist");
-            return false;
-        }
-
-        // Retrieves UserCredential item based on user id
-        User userDB = userRepository.findById(clientUserId).get();
-        UserCredentials userCredentialsDB = new UserCredentials(
-                userDB.getUserId(), userDB.getPassword(), userDB.isLecturer());
-
-        String passwordClient = userCredentialsClient.getPassword();
-        String passwordDB = userCredentialsDB.getPassword();
-
-        return passwordClient.equals(passwordDB);
-    }
-
-
-    /**
-     * Search for the basic user information, which consists of user's first name and last login date.
-     *
-     * @param userId - the unique user identification number for a given user.
-     * @return UserBasicProfileInfo DTO.
-     */
-    public UserBasicProfileInfo getUserBasicInfo(int userId) {
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new IllegalArgumentException("User not found."));
-
-        return new UserBasicProfileInfo(user.getFirstName(),
-                                        user.getCourse().getCourseId(),
-                                        user.isLecturer(),
-                                        user.getLastLoginDate());
-    }
-
-    public boolean checkLecturerAccess(int userId) {
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new IllegalArgumentException("User not found."));
-
-        return user.isLecturer();
-    }
-
-    public String updateLastLogin(int userId) {
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new IllegalArgumentException("User not found"));
-        user.setLastLoginDate(LocalDate.now());
-        userRepository.save(user);
-
-        return "Last Login Date updated";
-    }
-
-    /**
      * Retrieves a {@code Quiz} object from the repository based on the quiz Id.
      *
      * @param quizId
@@ -208,6 +145,9 @@ public class EQuizPlatformService {
      */
     @Transactional
     public boolean updateSelectedChoice(int userId, int quizId, int questionNo, int choice) {
+        if (choice == 0) {
+            choice = 1;
+        }
         if (!currQuizAttemptProcessor.updateSelectedChoice(userId, quizId, questionNo, choice)) {
             throw new RuntimeException("Something went wrong with updating selected Choice");
         }
@@ -379,9 +319,10 @@ public class EQuizPlatformService {
      * @return
      */
     public String getCourseNameByQuizId(int quizId) {
-        Course course = courseRepository.findByQuizId(quizId);
         Quiz quiz = quizRepository.findById(quizId).orElseThrow(() ->
                 new IllegalArgumentException("Quiz not found."));
+        Course course = courseRepository.findById(quiz.getCourseId()).orElseThrow(() ->
+                new IllegalArgumentException("Course not found."));
 
         return course.getCourseName();
     }
@@ -467,5 +408,18 @@ public class EQuizPlatformService {
 
     public Page<QuestionPreview> getAllQuestionPreviewByCourseId(int courseId, int page) {
         return getAllQuestionPreviewByCourseId(courseId, page, 3);
+    }
+
+    public Course retrieveCourse(Integer userId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new IllegalArgumentException("User not found."));
+        return courseRepository.findById(user.getCourse().getCourseId()).orElseThrow(() ->
+                new IllegalArgumentException("Course not found."));
+    }
+
+    public List<Topic> retrieveTopicByCourseId(Integer courseId) {
+        Course course = courseRepository.findById(courseId).orElseThrow(() ->
+                new IllegalArgumentException("Course not found."));
+        return topicRepository.findByCourse(course);
     }
 }

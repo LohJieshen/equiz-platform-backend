@@ -8,7 +8,7 @@
 		<version>3.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>edu.digipen.mod8.capstone</groupId>
+	<groupId>edu.digipen.capstone</groupId>
 	<artifactId>EQuizPlatform</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>

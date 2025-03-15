@@ -24,13 +24,6 @@ public class Topic {
     @Column(name="topic_name")
     private String topicName;
 
-    // TODO - If I introduce courseId as a field, will fail to compile. Investigate.
-/*
-    @Column(name="course_id")
-    private Integer courseId;
-*/
-
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="course_id")
