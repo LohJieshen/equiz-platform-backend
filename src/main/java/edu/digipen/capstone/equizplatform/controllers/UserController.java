@@ -44,9 +44,9 @@ public class UserController {
     @GetMapping("/check-lecturer/{userId}")
     public ResponseEntity<Boolean> checkLecturerAccess(@PathVariable int userId) {
         if (userService.checkLecturerAccess(userId)) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
+            return ResponseEntity.ok().body(true);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        return ResponseEntity.ok().body(false);
     }
 
     @PutMapping("/update-last-login/{userId}")
