@@ -9,7 +9,7 @@ COPY pom.xml .
 COPY src/ ./src/
 
 # Build the Spring Boot app (this will generate the JAR file)
-RUN mvn clean package -DskipTests
+RUN mvn clean compile package -DskipTests
 
 # Second stage: run the app in a OpenJDK container
 FROM eclipse-temurin:21-alpine
