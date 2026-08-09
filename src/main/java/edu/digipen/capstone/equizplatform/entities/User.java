@@ -30,17 +30,20 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id")
+    @Column(name="user_id", nullable = false)
     private Integer userId;
 
-    @Column(name="first_name")
+    @Column(name="first_name", nullable = false)
     private String firstName;
 
     @Column(name="last_name")
     private String lastName;
 
-    @Column(name="password")
+    @Column(name="init_password", length = 30)
     private String password;
+
+    @Column(name="password_hash", length = 200)
+    private String passwordHash;
 
     @JsonFormat(pattern="yyyy-MM-dd")
     @Column(name="last_login_date")

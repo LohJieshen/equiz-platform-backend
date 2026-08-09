@@ -18,7 +18,8 @@ CREATE TABLE equiz.course (
 
 CREATE TABLE equiz.user (
     user_id             INTEGER         NOT NULL,
-    password            VARCHAR(30)     NOT NULL,
+    init_ password      VARCHAR(30)             ,
+    password_hash       VARCHAR(200)            ,
     first_name          VARCHAR(30)     NOT NULL,
     last_name           VARCHAR(30)     NOT NULL,
     last_login_date     DATE,

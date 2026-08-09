@@ -23,7 +23,7 @@ public class QuestionProcessor {
 
     /**
      * Truncates the text in a string down to 150 characters and appends "..." to the end
-     * if it's over 150 characters. Otherwise returns the string as-is.
+     * if it's over 150 characters. Otherwise, returns the string as-is.
      *
      * @param questionBody
      * @return String

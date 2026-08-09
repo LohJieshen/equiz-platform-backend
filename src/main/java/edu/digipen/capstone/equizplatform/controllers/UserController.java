@@ -1,11 +1,10 @@
 package edu.digipen.capstone.equizplatform.controllers;
 
-import edu.digipen.capstone.equizplatform.entities.User;
 import edu.digipen.capstone.equizplatform.models.UserBasicProfileInfo;
 import edu.digipen.capstone.equizplatform.models.UserCredentials;
 import edu.digipen.capstone.equizplatform.services.EQuizPlatformService;
+import edu.digipen.capstone.equizplatform.services.UserManagementService;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +16,11 @@ public class UserController {
 
     private final EQuizPlatformService eQuizPlatformService;
 
+    private final UserManagementService userManagementService;
+
     @GetMapping("/basic-info/{userId}")
     public UserBasicProfileInfo getUserBasicInfo(@PathVariable int userId) {
-        return eQuizPlatformService.getUserBasicInfo(userId);
+        return userManagementService.getUserBasicInfo(userId);
     }
 
     /**
@@ -37,7 +38,7 @@ public class UserController {
     @PutMapping("/login")
     public ResponseEntity<Boolean> authenticateUserLoginCredentials(@RequestBody UserCredentials userCredentials) {
 
-        if (eQuizPlatformService.authenticateUserLogin(userCredentials)) {
+        if (userManagementService.authenticateUserLogin(userCredentials)) {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
@@ -45,7 +46,7 @@ public class UserController {
 
     @GetMapping("/check-lecturer/{userId}")
     public ResponseEntity<Boolean> checkLecturerAccess(@PathVariable int userId) {
-        if (eQuizPlatformService.checkLecturerAccess(userId)) {
+        if (userManagementService.checkLecturerAccess(userId)) {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
@@ -53,7 +54,7 @@ public class UserController {
 
     @PutMapping("/update-last-login/{userId}")
     public ResponseEntity<String> updateLastLogin(@PathVariable int userId) {
-        String message = eQuizPlatformService.updateLastLogin(userId);
+        String message = userManagementService.updateLastLogin(userId);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 }
