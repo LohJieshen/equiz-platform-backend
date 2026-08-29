@@ -21,7 +21,7 @@ INSERT INTO topic (topic_id, topic_name, course_id) VALUES
 (3, 'Statistics', 2);
 
 -- user_id format: YYXXXX. user_id is text as it's a combination of strings and numbers.
-INSERT INTO "user" (user_id, password, first_name, last_name, last_login_date, course_id, is_lecturer) VALUES
+INSERT INTO "user" (user_id, init_password, first_name, last_name, last_login_date, course_id, is_lecturer) VALUES
 ('230001', 'tenaciousD', 'Jack', 'Black', '2024-08-01', 1, TRUE),
 ('230002', 'muda', 'Dio', 'Brando', '2024-08-02', 2, TRUE),
 ('230003', 'risingforce', 'Yngwie', 'Malmsteen', '2024-07-29', 1, FALSE),
