@@ -1,7 +1,6 @@
 package edu.digipen.capstone.equizplatform.services;
 
 import edu.digipen.capstone.equizplatform.entities.User;
-import edu.digipen.capstone.equizplatform.models.UserCredentials;
 import edu.digipen.capstone.equizplatform.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.when;
 class EQuizPlatformServiceTest {
 
     @InjectMocks
-    private EQuizPlatformService eQuizPlatformService;
+    private UserManagementService userManagementService;
 
     @Mock
     private UserRepository mockUserRepository;
@@ -36,7 +35,7 @@ class EQuizPlatformServiceTest {
         when(mockUserRepository.save(userWithOldLoginDate)).thenReturn(updatedUser);
 
         // When
-        String message = eQuizPlatformService.updateLastLogin(userId);
+        String message = userManagementService.updateLastLogin(userId);
 
         // Then
         assertEquals(LocalDate.now(), updatedUser.getLastLoginDate());

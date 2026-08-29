@@ -1,7 +1,6 @@
 package edu.digipen.capstone.equizplatform.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +15,8 @@ import java.time.LocalDate;
                 "FROM User u WHERE u.userId = :id"),
         @NamedQuery(name="User.findUserCredentials",
         query="SELECT new edu.digipen.capstone.equizplatform.models.UserCredentials(" +
-                "u.userId, u.password, u.isLecturer) " +
-                "FROM User u WHERE u.userId = :userId AND u.password = :password "),
+                "u.userId, u.passwordHash, u.isLecturer) " +
+                "FROM User u WHERE u.userId = :userId AND u.passwordHash = :password "),
         @NamedQuery(name="User.findAllByCourseId",
         query="SELECT u FROM User u WHERE u.course.courseId = :courseId")
 })
